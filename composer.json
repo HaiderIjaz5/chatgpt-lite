@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 {
   "name": "chatgpt-lite",
   "description": "ChatGPT Lite Web App",
   "require": {}
 }
+=======
+{
+  "name": "chatgpt-lite",
+  "description": "ChatGPT Lite Web App",
+  "require": {}
+}
+>>>>>>> 59775e60c9a02355eecb2d1f6ccdd7ff525f1d2f
