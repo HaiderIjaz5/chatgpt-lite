@@ -21,15 +21,14 @@
     }
 
     header {
-  background: #10a37f;
-  color: white;
-  padding: 15px 20px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  text-align: center; /* ✅ This centers the text */
-}
-
+      background: #10a37f;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      text-align: center;
+    }
 
     .offline-banner {
       text-align: center;
@@ -138,6 +137,7 @@
   <div id="inputArea">
     <textarea id="input" placeholder="Type a message..."></textarea>
     <button onclick="sendMessage()">Send</button>
+    <button onclick="resetChat()" style="background-color:#dc3545;">Clear</button>
   </div>
 
   <script>
@@ -265,6 +265,18 @@
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US';
       speechSynthesis.speak(utterance);
+    }
+
+    function resetChat() {
+      fetch('clear.php')
+        .then(response => response.text())
+        .then(msg => {
+          chat.innerHTML = '';
+          alert(msg);
+        })
+        .catch(err => {
+          alert('❌ Failed to reset chat.');
+        });
     }
 
     input.addEventListener('keydown', (e) => {

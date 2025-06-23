@@ -12,7 +12,7 @@ if (!isset($_SESSION['chat_history'])) {
 
 $_SESSION['chat_history'][] = ["role" => "user", "content" => $prompt];
 
-$apiKey = "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";
+$apiKey = "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";
 $url = "https://openrouter.ai/api/v1/chat/completions";
 $model = "openai/gpt-3.5-turbo";
 
