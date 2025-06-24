@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ChatGPT Lite</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -26,7 +30,7 @@
       padding: 15px 20px;
       font-size: 1.5rem;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
@@ -128,6 +132,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>🤖 ChatGPT Lite</header>
   <div class="offline-banner" id="offlineBanner">⚠️ You are offline</div>
@@ -135,9 +140,11 @@
   <div id="chat"></div>
 
   <div id="inputArea">
+    <!-- Export button moved to left -->
+    <button onclick="downloadChat()" style="background-color:#0d6efd;">💾 Export</button>
     <textarea id="input" placeholder="Type a message..."></textarea>
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="resetChat()" style="background-color:#dc3545;">Clear</button>
+    <button onclick="sendMessage()">🚀 Send</button>
+    <button onclick="resetChat()" style="background-color:#dc3545;">🗑️ Clear</button>
   </div>
 
   <script>
@@ -279,6 +286,29 @@
         });
     }
 
+    function downloadChat() {
+      fetch('download_chat.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'error') {
+            alert(data.message);
+          } else {
+            const blob = new Blob([data.content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat_history_${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }
+        })
+        .catch(error => {
+          alert('❌ Failed to download chat.');
+        });
+    }
+
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -289,4 +319,5 @@
     input.addEventListener('input', resizeInput);
   </script>
 </body>
+
 </html>
